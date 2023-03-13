@@ -46,6 +46,7 @@ class Player:
     def __init__(self, name):
         self.name = name
         self.score = 0
+        self.scoreAce = 0
         self.hand = []
 
     def draw(self, deck):
@@ -57,9 +58,35 @@ class Player:
             c.show()
 
 
+    def scoreHand(self):
+        hasAce = False
+        for c in self.hand:
+            if c.value == "A":
+                self.score += 1
+                self.scoreAce += 11
+                hasAce = True
+            elif c.value in ["J","Q","K"]:
+                self.score += 10
+                self.scoreAce += 10
+            else:
+                self.score += c.value
+                self.scoreAce += c.value
+        if hasAce:
+            print(f"The current hand is {self.score} or {self.scoreAce}")
+        else:
+            print(f"The current hand is {self.score}")
+
 
 deck = Deck()
 deck.shuffle()
+
+travis = Player("Travis")
+
+travis.draw(deck)
+travis.draw(deck)
+
+travis.showHand()
+travis.scoreHand()
 
 
 
